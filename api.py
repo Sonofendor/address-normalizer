@@ -6,7 +6,7 @@ from parsing import optimize_for_search, optimize_housenum, preprocess, extract_
 '''
 Не работает без Elastic с загруженным туда ФИАС и проиндексированным на поиск родителей каждой строки
 '''
-es = Elasticsearch()
+#es = Elasticsearch()
 
 
 def verify_address(full_address):
@@ -132,9 +132,9 @@ def standardize(string, origin=True, debug=False):
     address, house = extract_house(address)
     dic['index'] = index
     dic['address'] = address
-    dic.update(verify_address(address))
-    if dic.get('street', False):
-        dic.update(verify_home(house, dic['guid'], index))
+    #dic.update(verify_address(address))
+    #if dic.get('street', False):
+    #    dic.update(verify_home(house, dic['guid'], index))
     dic.update(house)
     return dic
 

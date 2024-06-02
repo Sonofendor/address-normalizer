@@ -1,4 +1,4 @@
-# Addres Normalizer
+# Address Normalizer
 **Цель данного проекта** - приведение российского адреса, заданного произвольной строкой,
 к единому формату по аналогии с [API сервиса Dadata](https://dadata.ru/api/suggest/address/). За основу проекта взят
 [репозиторий пользователя shigabeev](https://github.com/shigabeev/address-normalizer).

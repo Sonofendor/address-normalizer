@@ -6,7 +6,7 @@ services:
     ports:
       - "${DB_PORT}:${DB_CONTAINER_PORT}"
     volumes:
-      - db:${DB_CONTAINER_DATA_PATH}
+      - D:\work\dit\workspace\volumes\address_normalizer:${DB_CONTAINER_DATA_PATH}
     environment:
       POSTGRES_DB: "${DB_NAME}"
       POSTGRES_USER: "${DB_USER}"
@@ -14,9 +14,6 @@ services:
     networks:
       - address_normalizer
 
-volumes:
-  db:
-    driver: local
 
 networks:
   address_normalizer:

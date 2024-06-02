@@ -82,3 +82,93 @@ select
 from 
     pre
 """
+
+# KLADR
+q_create_raw_kladr_altnames_table = '''
+create table if not exists public.raw_kladr_altnames (
+    oldcode text,
+    newcode text,
+    level smallint
+)
+'''
+q_truncate_raw_kladr_altnames_table = 'TRUNCATE TABLE public.raw_kladr_altnames'
+q_copy_raw_kladr_altnames_table = "COPY public.raw_kladr_altnames FROM STDIN WITH CSV HEADER DELIMITER '\t'"
+
+q_create_raw_kladr_doma_table = '''
+create table if not exists public.raw_kladr_doma (
+    name text,
+    korp text,
+    socr text,
+    code char(19),
+    index char(6),
+    gninmb char(4),
+    uno char(4),
+    ocatid char(11)
+)
+'''
+q_truncate_raw_kladr_doma_table = 'TRUNCATE TABLE public.raw_kladr_doma'
+q_copy_raw_kladr_doma_table = "COPY public.raw_kladr_doma FROM STDIN WITH CSV HEADER DELIMITER '\t'"
+
+q_create_raw_kladr_flat_table = '''
+create table if not exists public.raw_kladr_flat (
+    code char(19),
+    np text,
+    gninmb char(4),
+    name text,
+    index char(6),
+    uno char(4)
+)
+'''
+q_truncate_raw_kladr_flat_table = 'TRUNCATE TABLE public.raw_kladr_flat'
+q_copy_raw_kladr_flat_table = "COPY public.raw_kladr_flat FROM STDIN WITH CSV HEADER DELIMITER '\t'"
+
+q_create_raw_kladr_kladr_table = '''
+create table if not exists public.raw_kladr_kladr (
+    name text,
+    socr text,
+    code char(19),
+    index char(6),
+    gninmb char(4),
+    uno char(4),
+    ocatid char(11),
+    status smallint
+)
+'''
+q_truncate_raw_kladr_kladr_table = 'TRUNCATE TABLE public.raw_kladr_kladr'
+q_copy_raw_kladr_kladr_table = "COPY public.raw_kladr_kladr FROM STDIN WITH CSV HEADER DELIMITER '\t'"
+
+q_create_raw_kladr_namemap_table = '''
+create table if not exists public.raw_kladr_namemap (
+    code char(19),
+    name text,
+    shname text,
+    scname text
+)
+'''
+q_truncate_raw_kladr_namemap_table = 'TRUNCATE TABLE public.raw_kladr_namemap'
+q_copy_raw_kladr_namemap_table = "COPY public.raw_kladr_namemap FROM STDIN WITH CSV HEADER DELIMITER '\t'"
+
+q_create_raw_kladr_socrbase_table = '''
+create table if not exists public.raw_kladr_socrbase (
+    level smallint,
+    scname text,
+    socrname text,
+    kod_t_st char(3)
+)
+'''
+q_truncate_raw_kladr_socrbase_table = 'TRUNCATE TABLE public.raw_kladr_socrbase'
+q_copy_raw_kladr_socrbase_table = "COPY public.raw_kladr_socrbase FROM STDIN WITH CSV HEADER DELIMITER '\t'"
+
+q_create_raw_kladr_street_table = '''
+create table if not exists public.raw_kladr_street (
+    name text,
+    socr text,
+    code char(19),
+    index char(6),
+    gninmb char(4),
+    uno char(4),
+    ocatid char(11)
+)
+'''
+q_truncate_raw_kladr_street_table = 'TRUNCATE TABLE public.raw_kladr_street'
+q_copy_raw_kladr_street_table = "COPY public.raw_kladr_street FROM STDIN WITH CSV HEADER DELIMITER '\t'"

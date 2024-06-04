@@ -1,6 +1,7 @@
 import sys
 from etl.postal_codes import update_postal_codes
 from etl.kladr import update_kladr
+from etl.gar import update_raw_gar_tables
 
 
 if __name__ == '__main__':
@@ -14,5 +15,7 @@ if __name__ == '__main__':
         update_postal_codes()
     elif entity == 'kladr':
         update_kladr()
+    elif entity == 'gar':
+        update_raw_gar_tables()
     else:
         raise ValueError(f'Unknown entity to update: {entity}')

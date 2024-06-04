@@ -172,3 +172,8 @@ create table if not exists public.raw_kladr_street (
 '''
 q_truncate_raw_kladr_street_table = 'TRUNCATE TABLE public.raw_kladr_street'
 q_copy_raw_kladr_street_table = "COPY public.raw_kladr_street FROM STDIN WITH CSV HEADER DELIMITER '\t'"
+
+# GAR
+q_create_gar_table = "CREATE TABLE IF NOT EXISTS public.raw_gar_{table} ({fields} TEXT)"
+q_truncate_gar_table = 'TRUNCATE TABLE public.raw_gar_{table}'
+q_copy_gar_table = "COPY public.raw_gar_{table} ({fields}) FROM STDIN WITH CSV HEADER DELIMITER '\t'"

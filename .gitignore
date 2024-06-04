@@ -3,4 +3,5 @@
 *.zip
 *.7z
 *.dbf
+*.xml
 .env

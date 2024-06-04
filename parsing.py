@@ -93,7 +93,7 @@ def del_sp_char(string):
     '''
     Стоплист. Удаляет из строки символы переноса строки, но словарь можно дополнить при надобности
     '''
-    for stopword in {r'\n', r'\r', '\\', '(', ')', ':'}:
+    for stopword in {r'\n', r'\r', '\\', '(', ')', ':', '//'}:
         string = string.replace(stopword, ' ')
     return re.sub(r"[\d]+", ' \g<0> ', string)
 

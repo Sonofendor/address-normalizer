@@ -155,5 +155,5 @@ def get_addr(strings, progress=True):
 
 
 if __name__ == "__main__":
-    address = standardize("142703, Московская область, Ленинский район, г.Видное, ул. Школьная, д.78")
-    print(address['address'] + 'д ' + address['дом'])
+    address = standardize("Московская обл, Воскресенск г, Рабочая ул, дом 106, квартира 20")
+    print(optimize_for_search(address['address']))

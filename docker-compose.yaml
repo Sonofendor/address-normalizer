@@ -13,6 +13,7 @@ services:
       POSTGRES_PASSWORD: "${DB_PASS}"
     networks:
       - address_normalizer
+    shm_size: 5g
 
 
 networks:

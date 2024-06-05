@@ -1,4 +1,4 @@
-from parsing__new import extract_index, optimize_for_search, extract_flat, preprocess
+from parsing import process_address
 from etl import connect_to_db
 
 
@@ -15,16 +15,17 @@ class Address:
 
     def __init__(self, raw_address):
         self.original_address = raw_address
-        self.raw_address = preprocess(self.original_address)
-        self.raw_address, self.raw_postal_code = extract_index(self.raw_address)
-
+        processed_address = process_address(self.original_address)
+        self.raw_address = processed_address['raw_address']
+        self.search_string = processed_address['search_string']
+        self.raw_flat = processed_address['flat']
+        self.raw_postal_code = processed_address['postal_code']
         try:
             self.raw_postal_code = self.raw_postal_code.strip()
         except AttributeError:
             pass
-        self.raw_address, self.raw_flat = extract_flat(self.raw_address)
         self.raw_postal_code_valid, self.postal_address = self.search_in_postal_codes()
-        self.search_string = optimize_for_search(self.raw_address).rstrip()
+
 
     def search_in_postal_codes(self, connection=None):
         if connection is None:
@@ -100,7 +101,7 @@ class Address:
             else:
                 similar_addresses = [
                     address for address in found_addresses[1:]
-                    if (address['distance'] - first_address['distance']) / first_address['distance'] <= 0.5
+                    if (address['distance'] - first_address['distance']) / first_address['distance'] <= 0.2
                 ]
                 if similar_addresses:
                     return 2, [first_address, *similar_addresses]

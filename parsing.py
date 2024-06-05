@@ -93,7 +93,7 @@ def del_sp_char(string):
     '''
     Стоплист. Удаляет из строки символы переноса строки, но словарь можно дополнить при надобности
     '''
-    for stopword in {r'\n', r'\r', '\\', '(', ')', ':', '//'}:
+    for stopword in {r'\n', r'\r', '\\', '(', ')', ':', '//', '№'}:
         string = string.replace(stopword, ' ')
     return re.sub(r"[\d]+", ' \g<0> ', string)
 
@@ -198,11 +198,14 @@ def clarify_address(tokens, types):
                 dic[typ] = token
 
     # rename
-    dic['Дом'] = dic.get('дом', '')
+    dic['flat'] = dic.get('квартира', False)
+    dic['house'] = dic.get('дом', False)
     if len(dic.get('корпус', '')) > len(dic.get('строение', '')):
-        dic['Корпус/строение'] = dic['корпус']
+        dic['building'] = dic['корпус']
+        dic['building_type'] = 'к'
     elif dic.get('строение', False):
-        dic['Корпус/строение'] = dic['строение']
+        dic['building'] = dic['строение']
+        dic['building_type'] = 'стр'
     return dic
 
 
@@ -232,7 +235,10 @@ def extract_house(string):  # from 2.0
     split = tokens_to_string(house_tokens, string)
 
     house = clarify_address(house_tokens, house_types)
-    address = string[:split]
+    if split > 0:
+        address = string[:split]
+    else:
+        address = string
     # house = string[split:]
     return address, house
 
@@ -242,18 +248,18 @@ stopwords = {
     'федерация': '',
     'орел': 'орёл',
     'мо': 'московская обл',
-    'большой': "(б OR большой)",
-    'большая': "(б OR большая)",
-    'малый': "(м OR малый)",
-    'малая': "(м OR малая)",
-    'средний': '(ср OR с OR средний)',
-    'средняя': '(ср OR с OR средняя)',
-    'нижний': '(н OR нижний)',
-    'б': "(б OR большая OR большой)",
-    'с': '(ср OR с OR средняя OR средний)',
-    'ср': '(ср OR с OR средняя OR средний)',
-    'м': "(м OR малый OR малая)",
-    'н': '(н OR нижний)',
+    'большой': "(б | большой)",
+    'большая': "(б | большая)",
+    'малый': "(м | малый)",
+    'малая': "(м | малая)",
+    'средний': '(ср | с | средний)',
+    'средняя': '(ср | с | средняя)',
+    'нижний': '(н | нижний)',
+    'б': "(б | большая | большой)",
+    'с': '(ср | с | средняя | средний)',
+    'ср': '(ср | с | средняя | средний)',
+    'м': "(м | малый | малая)",
+    'н': '(н | нижний)',
     '/': ''
 }
 
@@ -263,8 +269,8 @@ def optimize_for_search(string):
     вводит небольшие изменения в строку поиска для более точного поиска
     '''
     string = string.replace('ё', 'е')
-    string = multiple_replace(stopwords, string.lower())
-    string = multiple_replace(replaces_inv, string)
+    # string = multiple_replace(stopwords, string.lower())
+    # string = multiple_replace(replaces_inv, string)
     # string = re.sub(r"[а-яА-Я]{4,}", '\g<0>~^2', string)
     return string
 

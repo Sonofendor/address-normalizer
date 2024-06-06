@@ -4,3 +4,4 @@ psycopg2-binary
 pandas
 py7zr
 lxml
+natasha

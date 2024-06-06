@@ -1,4 +1,4 @@
-from parsing import optimize_for_search, optimize_housenum, preprocess, extract_index, extract_house
+from search.parsing import optimize_for_search, preprocess, extract_index, extract_house
 
 def standardize(string, origin=True, debug=False):
     '''

@@ -11,6 +11,8 @@ from etl import (
     q_create_raw_kladr_namemap_table, q_truncate_raw_kladr_namemap_table, q_copy_raw_kladr_namemap_table,
     q_create_raw_kladr_socrbase_table, q_truncate_raw_kladr_socrbase_table, q_copy_raw_kladr_socrbase_table,
     q_create_raw_kladr_street_table, q_truncate_raw_kladr_street_table, q_copy_raw_kladr_street_table,
+    q_create_kladr_temp_query, q_create_kladr_table, q_insert_into_kladr_table, q_create_kladr_index,
+    q_create_kladr_view
 )
 
 filenames = ['altnames', 'doma', 'flat', 'kladr', 'namemap', 'socrbase', 'street',]
@@ -83,7 +85,23 @@ def upload_files_to_db():
         upload_file_to_db(filename)
 
 
+def update_data_in_db():
+    connection = connect_to_db()
+    cursor = connection.cursor()
+    try:
+        cursor.execute(q_create_kladr_temp_query)
+        cursor.execute(q_create_kladr_table)
+        cursor.execute(q_insert_into_kladr_table)
+        cursor.execute(q_create_kladr_index)
+        cursor.execute(q_create_kladr_view)
+        connection.commit()
+    finally:
+        cursor.close()
+        connection.close()
+
+
 def update_kladr():
     clear_kladr_folder()
     extract_kladr_from_archive()
     upload_files_to_db()
+    update_data_in_db()

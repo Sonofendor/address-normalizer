@@ -89,9 +89,6 @@ class Address:
                 'house_type': self.kladr_house_type,
                 'house': self.kladr_house,
             },
-            'gar': {
-                # empty for now
-            }
         }
 
     def search_in_postal_codes(self, connection=None):
